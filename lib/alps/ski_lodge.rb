@@ -20,6 +20,11 @@ class SkiLodge
       @skiers.map! do |skier|
         skier.ski_to(trail_map.mountains_adjacent_to(skier.pos))
       end.flatten!.compact!
+
+      if $debug
+        puts "Skiers remaining: #{@skiers.length}."
+        puts "Skier momentums: #{@skiers.map { |s| s.instance_variable_get(:@momentum)}.uniq.sort}"
+      end
     end
   end
 end
