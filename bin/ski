@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+require_relative '../lib/alps'
+require 'optparse'
+
+size = 5
+height = 20
+$debug = false
+
+OptionParser.new do |opts|
+  opts.on('-s',
+          '--size [SIZE]',
+          Integer,
+          'Size of the map to ski (default: 5)') do |s|
+    size = s
+  end
+
+  opts.on('-m',
+          '--mountain-height [MAX_HEIGHT]',
+          Integer,
+          'Maximum height of mountains on the map (default: 20)') do |h|
+    height = h
+  end
+
+  opts.on('--[no-]debug', 'Turn on debugging output') do |d|
+    $debug = d
+  end
+end.parse!
+
+
+m = Map.new(size, height)
+l = SkiLodge.new
+l.ski_map(m)
+
+puts "We sent out the ski team, and they reported that the longest run is:"
+puts l.longest_run
+# vim:ft=ruby
